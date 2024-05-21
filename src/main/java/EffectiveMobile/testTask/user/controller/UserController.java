@@ -1,6 +1,5 @@
 package EffectiveMobile.testTask.user.controller;
 
-import EffectiveMobile.testTask.user.model.BankAccount;
 import EffectiveMobile.testTask.user.model.User;
 import EffectiveMobile.testTask.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.math.BigDecimal;
 
 
 @Controller

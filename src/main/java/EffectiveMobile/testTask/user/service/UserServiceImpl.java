@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private BankAccountService bankAccountService;
 
     @Override
     public User createUser(User user) {
         BankAccount bankAccount = user.getBankAccount();
         bankAccount.setUser(user);
+        bankAccount.setBalance(bankAccount.getStartBalance());
         return  userRepository.save(user);
     }
 }

@@ -2,7 +2,6 @@ package EffectiveMobile.testTask.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
 
@@ -23,7 +22,6 @@ public class BankAccount {
 
     @Column(name = "balance")
     private BigDecimal balance;
-
 
     @OneToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
