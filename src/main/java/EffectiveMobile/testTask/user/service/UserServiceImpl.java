@@ -6,6 +6,7 @@ import EffectiveMobile.testTask.user.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<User> findUsers(LocalDate birthDate, String phone, String fullName, String email) {
+  public List<User> findUsersByFilter(LocalDate birthDate, String phone, String fullName, String email) {
     List<User> serchResultListOfUsers = userRepository.findAll();
     int startSizeOfList = serchResultListOfUsers.size();
     if (phone != null) {
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
       }
     }
     if (fullName != null) {
-      Optional<List<User>> findedUsersOptional = userRepository.findByFullName(fullName);
+      Optional<List<User>> findedUsersOptional = userRepository.findByName(fullName);
       if (findedUsersOptional.isPresent()) {
         List<User> findedUsers = findedUsersOptional.get();
         if (serchResultListOfUsers.size() == startSizeOfList) {
@@ -95,5 +96,15 @@ public class UserServiceImpl implements UserService {
       }
     }
     return serchResultListOfUsers;
+  }
+
+  @Override
+  public UserDetailsService userDetailService() {
+    return this::findByUsername;
+  }
+
+  @Override
+  public User findByUsername(String username) {
+    return  userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException("Пользотваель не найден"));
   }
 }

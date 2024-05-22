@@ -1,9 +1,14 @@
 package EffectiveMobile.testTask.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -14,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "\"user\"")
-public class User {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -34,12 +39,51 @@ public class User {
   private List<String> phone;
 
   @Column(name = "birth_date")
-  private LocalDate birthDate = LocalDate.parse("2004-06-12");
+  private LocalDate birthDate;
 
   @Column(name = "full_name")
-  private String fullName = "Viktor Sergeevich Korneplod";
+  private String fullName;
 
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name="bank_account_id", referencedColumnName = "id")
+  @JoinColumn(name = "bank_account_id", referencedColumnName = "id")
+  @JsonIgnore
   private BankAccount bankAccount;
+
+  @Enumerated(EnumType.STRING)
+  private Role role;
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(role.name()));
+  }
+
+  @Override
+  public String getPassword() {
+    return String.valueOf(password);
+  }
+
+  @Override
+  public String getUsername() {
+    return username;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }
