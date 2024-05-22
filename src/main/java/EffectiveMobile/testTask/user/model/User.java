@@ -34,10 +34,10 @@ public class User {
   private List<String> phone;
 
   @Column(name = "birth_date")
-  private LocalDate birthDate;
+  private LocalDate birthDate = LocalDate.parse("2004-06-12");
 
   @Column(name = "full_name")
-  private String fullName;
+  private String fullName = "Viktor Sergeevich Korneplod";
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name="bank_account_id", referencedColumnName = "id")

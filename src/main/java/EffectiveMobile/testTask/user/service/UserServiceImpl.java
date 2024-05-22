@@ -41,61 +41,57 @@ public class UserServiceImpl implements UserService {
     }
     if (email != null) {
       Optional<User> findedUserOptional = userRepository.findByEmail(email);
-      if (findedUserOptional.isPresent()){
-          User findedUser = findedUserOptional.get();
-          if (!serchResultListOfUsers.contains(findedUser)) {
-              return Collections.emptyList();
-          } else {
-              serchResultListOfUsers = new ArrayList<>();
-              serchResultListOfUsers.add(findedUser);
-          }
-      }
-      else{
+      if (findedUserOptional.isPresent()) {
+        User findedUser = findedUserOptional.get();
+        if (!serchResultListOfUsers.contains(findedUser)) {
           return Collections.emptyList();
+        } else {
+          serchResultListOfUsers = new ArrayList<>();
+          serchResultListOfUsers.add(findedUser);
+        }
+      } else {
+        return Collections.emptyList();
       }
-
     }
     if (birthDate != null) {
       Optional<List<User>> findedUsersOptional = userRepository.findByDate(birthDate);
-      if (findedUsersOptional.isPresent()){
-          List <User> findedUsers = findedUsersOptional.get();
-          if (serchResultListOfUsers.size() == startSizeOfList) {
-              serchResultListOfUsers = new ArrayList<>(findedUsers);
-          } else if (!findedUsers.contains(serchResultListOfUsers.get(0))) {
-              return Collections.emptyList();
-          }
-      }
-      else{
+      if (findedUsersOptional.isPresent()) {
+        List<User> findedUsers = findedUsersOptional.get();
+        if (serchResultListOfUsers.size() == startSizeOfList) {
+          serchResultListOfUsers = new ArrayList<>(findedUsers);
+        } else if (!findedUsers.contains(serchResultListOfUsers.get(0))) {
           return Collections.emptyList();
+        }
+      } else {
+        return Collections.emptyList();
       }
     }
     if (fullName != null) {
       Optional<List<User>> findedUsersOptional = userRepository.findByFullName(fullName);
-      if (findedUsersOptional.isPresent()){
-          List <User> findedUsers = findedUsersOptional.get();
-          if (serchResultListOfUsers.size() == startSizeOfList) {
+      if (findedUsersOptional.isPresent()) {
+        List<User> findedUsers = findedUsersOptional.get();
+        if (serchResultListOfUsers.size() == startSizeOfList) {
+          serchResultListOfUsers = new ArrayList<>(findedUsers);
+        } else {
+          if (serchResultListOfUsers.size() == 1) {
+            if (!findedUsers.contains(serchResultListOfUsers.get(0))) {
+              return Collections.emptyList();
+            } else {
               serchResultListOfUsers = new ArrayList<>(findedUsers);
+            }
           } else {
-              if (serchResultListOfUsers.size() == 1) {
-                  if (!findedUsers.contains(serchResultListOfUsers.get(0))) {
-                      return Collections.emptyList();
-                  } else {
-                      serchResultListOfUsers = new ArrayList<>(findedUsers);
-                  }
-              } else {
-                  Set<User> setOfUsers = new HashSet<>(findedUsers);
-                  List<User> result = new ArrayList<>();
-                  for (User user : serchResultListOfUsers) {
-                      if (setOfUsers.contains(user)) {
-                          result.add(user);
-                      }
-                  }
-                  return result;
+            Set<User> setOfUsers = new HashSet<>(findedUsers);
+            List<User> result = new ArrayList<>();
+            for (User user : serchResultListOfUsers) {
+              if (setOfUsers.contains(user)) {
+                result.add(user);
               }
+            }
+            return result;
           }
-      }
-      else{
-          return Collections.emptyList();
+        }
+      } else {
+        return Collections.emptyList();
       }
     }
     return serchResultListOfUsers;
