@@ -2,6 +2,8 @@ package EffectiveMobile.testTask.user.service;
 
 import EffectiveMobile.testTask.user.model.User;
 import EffectiveMobile.testTask.user.request.EditRequest;
+import EffectiveMobile.testTask.user.request.EmailDeleteRequest;
+import EffectiveMobile.testTask.user.request.PhoneDeleteRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -19,4 +21,8 @@ public interface UserService {
   public void editUserData(EditRequest editRequest);
 
   void addUserContacts(EditRequest request);
+
+  void deleteUserPhone(PhoneDeleteRequest request);
+
+  void deleteUserEmail(EmailDeleteRequest request);
 }

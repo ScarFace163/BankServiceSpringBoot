@@ -6,6 +6,8 @@ import EffectiveMobile.testTask.auth.AuthenticationService;
 import EffectiveMobile.testTask.auth.RegisterRequest;
 import EffectiveMobile.testTask.user.model.User;
 import EffectiveMobile.testTask.user.request.EditRequest;
+import EffectiveMobile.testTask.user.request.EmailDeleteRequest;
+import EffectiveMobile.testTask.user.request.PhoneDeleteRequest;
 import EffectiveMobile.testTask.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +42,14 @@ public class UserController {
     userService.addUserContacts(request);
     return ResponseEntity.ok(request);
   }
-  @PostMapping("/user/delete_phone")
-  public ResponseEntity<EditRequest> deleteUserPhone(@RequestBody EditRequest request) {
-    userService.addUserContacts(request);
+  @PostMapping("/user/delete-phone")
+  public ResponseEntity<PhoneDeleteRequest> deleteUserPhone(@RequestBody PhoneDeleteRequest request) {
+    userService.deleteUserPhone(request);
+    return ResponseEntity.ok(request);
+  }
+  @PostMapping("/user/delete-email")
+  public ResponseEntity<EmailDeleteRequest> deleteUserPhone(@RequestBody EmailDeleteRequest request) {
+    userService.deleteUserEmail(request);
     return ResponseEntity.ok(request);
   }
 

@@ -5,6 +5,8 @@ import EffectiveMobile.testTask.user.model.BankAccount;
 import EffectiveMobile.testTask.user.model.User;
 import EffectiveMobile.testTask.user.repository.UserRepository;
 import EffectiveMobile.testTask.user.request.EditRequest;
+import EffectiveMobile.testTask.user.request.EmailDeleteRequest;
+import EffectiveMobile.testTask.user.request.PhoneDeleteRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -151,5 +153,43 @@ public class UserServiceImpl implements UserService {
     }
     userRepository.save(user);
     log.info("Saved user: {}", user);
+  }
+
+  @Override
+  public void deleteUserPhone(PhoneDeleteRequest request) {
+    User user = (User) jwtService.getCurrentUser();
+    log.info("Current user: {}", user);
+    if (request.getPhone() != null) {
+      if(request.getPhone().size() < user.getPhone().size()){
+        List <String> usersPhone = user.getPhone();
+        usersPhone.removeAll(request.getPhone());
+        user.setPhone(usersPhone);
+        userRepository.save(user);
+      }
+      else{
+        throw new IllegalArgumentException("Must be 1 phone left");
+      }
+    }else{
+      throw new IllegalArgumentException("Phone are null");
+    }
+  }
+
+  @Override
+  public void deleteUserEmail(EmailDeleteRequest request) {
+    User user = (User) jwtService.getCurrentUser();
+    log.info("Current user: {}", user);
+    if (request.getEmail() != null) {
+      if(request.getEmail().size() < user.getEmail().size()){
+        List <String> usersEmail = user.getEmail();
+        usersEmail.removeAll(request.getEmail());
+        user.setEmail(usersEmail);
+        userRepository.save(user);
+      }
+      else{
+        throw new IllegalArgumentException("Must be 1 email left");
+      }
+    }else{
+      throw new IllegalArgumentException("Phone are null");
+    }
   }
 }
