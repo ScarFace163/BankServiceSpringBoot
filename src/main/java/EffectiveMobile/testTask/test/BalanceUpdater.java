@@ -1,4 +1,4 @@
-package EffectiveMobile.testTask.user;
+package EffectiveMobile.testTask.test;
 
 import EffectiveMobile.testTask.user.model.BankAccount;
 import EffectiveMobile.testTask.user.repository.BankAccountRepository;
@@ -32,20 +32,21 @@ public class BalanceUpdater {
         if (newBalance.compareTo(maxBalance) <= 0) {
           account.setBalance(newBalance);
 
-        }else{
-            account.setBalance(maxBalance);
+        } else {
+          account.setBalance(maxBalance);
         }
         bankAccountRepository.save(account);
       }
     }
   }
-  @Scheduled(cron = "0 0 0 1 * ?")
-    public void updateStartBalances() {
-        List<BankAccount> allBankAccounts = bankAccountRepository.findAll();
 
-        for (BankAccount account : allBankAccounts) {
-            BigDecimal currentBalance = account.getBalance();
-            account.setStartBalance(currentBalance);
-        }
+  @Scheduled(cron = "0 0 0 1 * ?")
+  public void updateStartBalances() {
+    List<BankAccount> allBankAccounts = bankAccountRepository.findAll();
+
+    for (BankAccount account : allBankAccounts) {
+      BigDecimal currentBalance = account.getBalance();
+      account.setStartBalance(currentBalance);
     }
+  }
 }

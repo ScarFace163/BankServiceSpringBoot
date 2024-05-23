@@ -27,7 +27,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<User> findUsersByFilter(LocalDate birthDate, String phone, String fullName, String email) {
+  public List<User> findUsersByFilter(
+      LocalDate birthDate, String phone, String fullName, String email) {
     List<User> serchResultListOfUsers = userRepository.findAll();
     int startSizeOfList = serchResultListOfUsers.size();
     if (phone != null) {
@@ -105,6 +106,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User findByUsername(String username) {
-    return  userRepository.findByUsername(username).orElseThrow(()-> new EntityNotFoundException("Пользотваель не найден"));
+    return userRepository
+        .findByUsername(username)
+        .orElseThrow(() -> new EntityNotFoundException("Пользотваель не найден"));
   }
 }

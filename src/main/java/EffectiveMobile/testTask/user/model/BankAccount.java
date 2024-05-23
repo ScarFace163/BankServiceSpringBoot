@@ -13,17 +13,17 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Table(name = "bank_account")
 public class BankAccount {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "start_balance")
-    private BigDecimal startBalance;
+  @Column(name = "start_balance")
+  private BigDecimal startBalance;
 
-    @Column(name = "balance")
-    private BigDecimal balance;
+  @Column(name = "balance")
+  private BigDecimal balance;
 
-    @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
-    private User user;
+  @OneToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private User user;
 }

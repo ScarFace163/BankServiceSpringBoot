@@ -13,9 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    private String username;
-    private String password;
-    private BigDecimal startBalance;
-    private List<String> email;
-    private List<String> phone;
+  private String username;
+  private String password;
+  private BigDecimal startBalance;
+  private List<String> email;
+  private List<String> phone;
 }

@@ -30,9 +30,10 @@ public class JwtService {
     return claimsResolver.apply(claims);
   }
 
-  public String generateToken(UserDetails userDetails){
-      return generateToken(new HashMap<>(), userDetails);
+  public String generateToken(UserDetails userDetails) {
+    return generateToken(new HashMap<>(), userDetails);
   }
+
   public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
     return Jwts.builder()
         .setClaims(extraClaims)
@@ -43,21 +44,20 @@ public class JwtService {
         .compact();
   }
 
-
-  public boolean isTokenValid(String token, UserDetails userDetails){
-      final String username = extractUsername(token);
-      return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+  public boolean isTokenValid(String token, UserDetails userDetails) {
+    final String username = extractUsername(token);
+    return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
   }
 
-    private boolean isTokenExpired(String token) {
-      return extractExpiration(token).before(new Date());
-    }
+  private boolean isTokenExpired(String token) {
+    return extractExpiration(token).before(new Date());
+  }
 
-    private Date extractExpiration(String token) {
-        return extractClaim(token,Claims::getExpiration);
-    }
+  private Date extractExpiration(String token) {
+    return extractClaim(token, Claims::getExpiration);
+  }
 
-    private Claims extractAllClaims(String token) {
+  private Claims extractAllClaims(String token) {
     return Jwts.parserBuilder()
         .setSigningKey(getSignInKey())
         .build()

@@ -7,9 +7,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface UserService{
-    User createUser(User user);
-    List<User> findUsersByFilter(LocalDate birthDate, String phone, String fullName, String email);
-    UserDetailsService userDetailService();
-    public User findByUsername(String username);
+public interface UserService {
+  User createUser(User user);
+
+  List<User> findUsersByFilter(LocalDate birthDate, String phone, String fullName, String email);
+
+  UserDetailsService userDetailService();
+
+  public User findByUsername(String username);
 }
