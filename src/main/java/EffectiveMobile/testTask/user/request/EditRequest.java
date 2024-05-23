@@ -12,6 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EditRequest {
-    private List<String> email;
-    private List<String> phone;
+  private List<String> email;
+  private List<String> phone;
 }

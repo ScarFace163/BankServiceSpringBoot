@@ -1,6 +1,5 @@
 package EffectiveMobile.testTask.security;
 
-import ch.qos.logback.core.net.ObjectWriter;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -71,8 +70,9 @@ public class JwtService {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
     return Keys.hmacShaKeyFor(keyBytes);
   }
+
   @Transactional
-  public UserDetails getCurrentUser(){
+  public UserDetails getCurrentUser() {
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     if (principal instanceof UserDetails) {
       return (UserDetails) principal;

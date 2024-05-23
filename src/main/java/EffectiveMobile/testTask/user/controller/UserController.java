@@ -32,23 +32,29 @@ public class UserController {
   public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
     return ResponseEntity.ok(authService.register(request));
   }
+
   @PostMapping("/user/edit")
   public ResponseEntity<EditRequest> editUser(@RequestBody EditRequest request) {
     userService.editUserData(request);
     return ResponseEntity.ok(request);
   }
+
   @PostMapping("/user/add-info")
   public ResponseEntity<EditRequest> addUserInfo(@RequestBody EditRequest request) {
     userService.addUserContacts(request);
     return ResponseEntity.ok(request);
   }
+
   @PostMapping("/user/delete-phone")
-  public ResponseEntity<PhoneDeleteRequest> deleteUserPhone(@RequestBody PhoneDeleteRequest request) {
+  public ResponseEntity<PhoneDeleteRequest> deleteUserPhone(
+      @RequestBody PhoneDeleteRequest request) {
     userService.deleteUserPhone(request);
     return ResponseEntity.ok(request);
   }
+
   @PostMapping("/user/delete-email")
-  public ResponseEntity<EmailDeleteRequest> deleteUserPhone(@RequestBody EmailDeleteRequest request) {
+  public ResponseEntity<EmailDeleteRequest> deleteUserPhone(
+      @RequestBody EmailDeleteRequest request) {
     userService.deleteUserEmail(request);
     return ResponseEntity.ok(request);
   }

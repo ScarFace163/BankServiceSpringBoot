@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmailDeleteRequest {
-    List<String> email;
+  List<String> email;
 }

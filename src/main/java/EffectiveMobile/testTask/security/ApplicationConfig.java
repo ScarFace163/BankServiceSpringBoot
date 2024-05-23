@@ -1,8 +1,6 @@
 package EffectiveMobile.testTask.security;
 
-import EffectiveMobile.testTask.user.repository.UserRepository;
 import EffectiveMobile.testTask.user.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -11,7 +11,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -124,10 +123,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public void editUserData(EditRequest editRequest) {
     User user = (User) jwtService.getCurrentUser();
-    if(editRequest.getEmail()==null && editRequest.getPhone()==null){
+    if (editRequest.getEmail() == null && editRequest.getPhone() == null) {
       throw new IllegalArgumentException("Email and phone are null");
     }
-    if(editRequest.getEmail().isEmpty() && editRequest.getPhone().isEmpty()){
+    if (editRequest.getEmail().isEmpty() && editRequest.getPhone().isEmpty()) {
       throw new IllegalArgumentException("Email and phone are null");
     }
     log.info("Current user: {}", user);
@@ -145,7 +144,7 @@ public class UserServiceImpl implements UserService {
       user.setPhone(
           Stream.concat(user.getPhone().stream(), request.getPhone().stream())
               .collect(Collectors.toList()));
-      }
+    }
     if (request.getEmail() != null) {
       user.setEmail(
           Stream.concat(user.getEmail().stream(), request.getEmail().stream())
@@ -160,16 +159,15 @@ public class UserServiceImpl implements UserService {
     User user = (User) jwtService.getCurrentUser();
     log.info("Current user: {}", user);
     if (request.getPhone() != null) {
-      if(request.getPhone().size() < user.getPhone().size()){
-        List <String> usersPhone = user.getPhone();
+      if (request.getPhone().size() < user.getPhone().size()) {
+        List<String> usersPhone = user.getPhone();
         usersPhone.removeAll(request.getPhone());
         user.setPhone(usersPhone);
         userRepository.save(user);
-      }
-      else{
+      } else {
         throw new IllegalArgumentException("Must be 1 phone left");
       }
-    }else{
+    } else {
       throw new IllegalArgumentException("Phone are null");
     }
   }
@@ -179,16 +177,15 @@ public class UserServiceImpl implements UserService {
     User user = (User) jwtService.getCurrentUser();
     log.info("Current user: {}", user);
     if (request.getEmail() != null) {
-      if(request.getEmail().size() < user.getEmail().size()){
-        List <String> usersEmail = user.getEmail();
+      if (request.getEmail().size() < user.getEmail().size()) {
+        List<String> usersEmail = user.getEmail();
         usersEmail.removeAll(request.getEmail());
         user.setEmail(usersEmail);
         userRepository.save(user);
-      }
-      else{
+      } else {
         throw new IllegalArgumentException("Must be 1 email left");
       }
-    }else{
+    } else {
       throw new IllegalArgumentException("Phone are null");
     }
   }

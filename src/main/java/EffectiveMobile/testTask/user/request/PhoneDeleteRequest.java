@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PhoneDeleteRequest {
-    private List<String> phone;
+  private List<String> phone;
 }
