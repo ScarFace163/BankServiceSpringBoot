@@ -3,6 +3,8 @@ package EffectiveMobile.testTask.user.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,10 +33,12 @@ public class User implements UserDetails {
   private String password;
 
   @ElementCollection
+  @Fetch(FetchMode.JOIN)
   @Column(name = "email", unique = true)
   private List<String> email;
 
   @ElementCollection
+  @Fetch(FetchMode.JOIN)
   @Column(name = "phone", unique = true)
   private List<String> phone;
 

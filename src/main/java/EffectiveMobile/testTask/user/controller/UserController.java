@@ -5,6 +5,7 @@ import EffectiveMobile.testTask.auth.AuthenticationResponse;
 import EffectiveMobile.testTask.auth.AuthenticationService;
 import EffectiveMobile.testTask.auth.RegisterRequest;
 import EffectiveMobile.testTask.user.model.User;
+import EffectiveMobile.testTask.user.request.EditRequest;
 import EffectiveMobile.testTask.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +26,19 @@ public class UserController {
   private final AuthenticationService authService;
   private final UserServiceImpl userService;
 
-  @PostMapping("/users/create")
+  @PostMapping("/user/create")
   public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
     return ResponseEntity.ok(authService.register(request));
-    //        User savedUser = userService.createUser(user);
-    //        log.info("User created: {}", savedUser);
-    //        return ResponseEntity.ok(savedUser);
+  }
+  @PostMapping("/user/edit")
+  public ResponseEntity<EditRequest> editUser(@RequestBody EditRequest request) {
+    userService.editUserData(request);
+    return ResponseEntity.ok(request);
+  }
+  @PostMapping("/user/add-info")
+  public ResponseEntity<EditRequest> addUserInfo(@RequestBody EditRequest request) {
+    userService.addUserContacts(request);
+    return ResponseEntity.ok(request);
   }
 
   @PostMapping("/auth/authenticate")

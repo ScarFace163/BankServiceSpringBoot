@@ -1,22 +1,30 @@
 package EffectiveMobile.testTask.user.service;
 
+import EffectiveMobile.testTask.security.JwtService;
 import EffectiveMobile.testTask.user.model.BankAccount;
 import EffectiveMobile.testTask.user.model.User;
 import EffectiveMobile.testTask.user.repository.UserRepository;
+import EffectiveMobile.testTask.user.request.EditRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+  private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
   private final UserRepository userRepository;
+  private final JwtService jwtService;
 
   @Override
   public User createUser(User user) {
@@ -109,5 +117,25 @@ public class UserServiceImpl implements UserService {
     return userRepository
         .findByUsername(username)
         .orElseThrow(() -> new EntityNotFoundException("Пользотваель не найден"));
+  }
+
+  @Override
+  public void editUserData(EditRequest editRequest) {
+    User user = (User) jwtService.getCurrentUser();
+    log.info("Current user: {}", user);
+    user.setEmail(editRequest.getEmail());
+    user.setPhone(editRequest.getPhone());
+    userRepository.save(user);
+    log.info("Saved user: {}", user);
+  }
+
+  @Override
+  public void addUserContacts(EditRequest request) {
+    User user = (User) jwtService.getCurrentUser();
+    log.info("Current user: {}", user);
+    user.setPhone(Stream.concat(user.getPhone().stream(),request.getPhone().stream()).collect(Collectors.toList()));
+    user.setEmail(Stream.concat(user.getEmail().stream(),request.getEmail().stream()).collect(Collectors.toList()));
+    userRepository.save(user);
+    log.info("Saved user: {}", user);
   }
 }

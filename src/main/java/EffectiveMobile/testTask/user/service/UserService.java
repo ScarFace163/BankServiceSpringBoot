@@ -1,6 +1,7 @@
 package EffectiveMobile.testTask.user.service;
 
 import EffectiveMobile.testTask.user.model.User;
+import EffectiveMobile.testTask.user.request.EditRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -15,4 +16,7 @@ public interface UserService {
   UserDetailsService userDetailService();
 
   public User findByUsername(String username);
+  public void editUserData(EditRequest editRequest);
+
+  void addUserContacts(EditRequest request);
 }
