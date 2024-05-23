@@ -122,6 +122,12 @@ public class UserServiceImpl implements UserService {
   @Override
   public void editUserData(EditRequest editRequest) {
     User user = (User) jwtService.getCurrentUser();
+    if(editRequest.getEmail()==null && editRequest.getPhone()==null){
+      throw new IllegalArgumentException("Email and phone are null");
+    }
+    if(editRequest.getEmail().isEmpty() && editRequest.getPhone().isEmpty()){
+      throw new IllegalArgumentException("Email and phone are null");
+    }
     log.info("Current user: {}", user);
     user.setEmail(editRequest.getEmail());
     user.setPhone(editRequest.getPhone());
@@ -133,8 +139,16 @@ public class UserServiceImpl implements UserService {
   public void addUserContacts(EditRequest request) {
     User user = (User) jwtService.getCurrentUser();
     log.info("Current user: {}", user);
-    user.setPhone(Stream.concat(user.getPhone().stream(),request.getPhone().stream()).collect(Collectors.toList()));
-    user.setEmail(Stream.concat(user.getEmail().stream(),request.getEmail().stream()).collect(Collectors.toList()));
+    if (request.getPhone() != null) {
+      user.setPhone(
+          Stream.concat(user.getPhone().stream(), request.getPhone().stream())
+              .collect(Collectors.toList()));
+      }
+    if (request.getEmail() != null) {
+      user.setEmail(
+          Stream.concat(user.getEmail().stream(), request.getEmail().stream())
+              .collect(Collectors.toList()));
+    }
     userRepository.save(user);
     log.info("Saved user: {}", user);
   }

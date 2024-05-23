@@ -40,6 +40,11 @@ public class UserController {
     userService.addUserContacts(request);
     return ResponseEntity.ok(request);
   }
+  @PostMapping("/user/delete_phone")
+  public ResponseEntity<EditRequest> deleteUserPhone(@RequestBody EditRequest request) {
+    userService.addUserContacts(request);
+    return ResponseEntity.ok(request);
+  }
 
   @PostMapping("/auth/authenticate")
   public ResponseEntity<AuthenticationResponse> authentication(
