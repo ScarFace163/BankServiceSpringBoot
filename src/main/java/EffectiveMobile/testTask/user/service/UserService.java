@@ -13,7 +13,8 @@ import java.util.List;
 public interface UserService {
   public User createUser(User user);
 
-  public List<User> findUsersByFilter(LocalDate birthDate, String phone, String fullName, String email);
+  public List<User> findUsersByFilter(
+      LocalDate birthDate, String phone, String fullName, String email);
 
   public UserDetailsService userDetailService();
 
@@ -26,5 +27,6 @@ public interface UserService {
   public void deleteUserPhone(PhoneDeleteRequest request);
 
   public void deleteUserEmail(EmailDeleteRequest request);
+
   public void transferMoney(TransferRequest request);
 }

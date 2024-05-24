@@ -68,8 +68,7 @@ public class UserController {
   }
 
   @PostMapping("/user/transfer")
-  public ResponseEntity<TransferRequest> transfer(
-          @RequestBody TransferRequest request) {
+  public ResponseEntity<TransferRequest> transfer(@RequestBody TransferRequest request) {
     log.info("Вызов функции перевода денег");
     userService.transferMoney(request);
     return ResponseEntity.ok(request);

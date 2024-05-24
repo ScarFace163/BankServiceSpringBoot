@@ -194,19 +194,28 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void transferMoney(TransferRequest request) {
-      if (request.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
-          throw new IllegalArgumentException("Sum must be positive");
-      }
-      User fromUser =(User) jwtService.getCurrentUser();
-      log.info("From user: {}", fromUser);
-      User toUser = userRepository.findByUsername(request.getToAccountUsername().toString())
-              .orElseThrow(() -> new EntityNotFoundException("No user with username: " + request.getToAccountUsername()));
-      log.info("To user: {}", toUser);
-      if (fromUser.getBankAccount().getBalance().compareTo(request.getAmount()) <0){
-        throw new IllegalArgumentException("Not enough money");
-      }
-      fromUser.getBankAccount().setBalance(fromUser.getBankAccount().getBalance().subtract(request.getAmount()));
-      toUser.getBankAccount().setBalance(toUser.getBankAccount().getBalance().add(request.getAmount()));
+    if (request.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+      throw new IllegalArgumentException("Sum must be positive");
+    }
+    User fromUser = (User) jwtService.getCurrentUser();
+    log.info("From user: {}", fromUser);
+    User toUser =
+        userRepository
+            .findByUsername(request.getToAccountUsername().toString())
+            .orElseThrow(
+                () ->
+                    new EntityNotFoundException(
+                        "No user with username: " + request.getToAccountUsername()));
+    log.info("To user: {}", toUser);
+    if (fromUser.getBankAccount().getBalance().compareTo(request.getAmount()) < 0) {
+      throw new IllegalArgumentException("Not enough money");
+    }
+    fromUser
+        .getBankAccount()
+        .setBalance(fromUser.getBankAccount().getBalance().subtract(request.getAmount()));
+    toUser
+        .getBankAccount()
+        .setBalance(toUser.getBankAccount().getBalance().add(request.getAmount()));
     userRepository.save(fromUser);
     userRepository.save(toUser);
   }

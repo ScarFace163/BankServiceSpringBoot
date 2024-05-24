@@ -1,6 +1,5 @@
 package EffectiveMobile.testTask.user.request;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +12,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransferRequest {
-    private String toAccountUsername;
-    private BigDecimal amount;
+  private String toAccountUsername;
+  private BigDecimal amount;
 }
