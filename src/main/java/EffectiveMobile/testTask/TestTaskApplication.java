@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class TestTaskApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TestTaskApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(TestTaskApplication.class, args);
+  }
 }
