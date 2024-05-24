@@ -7,6 +7,7 @@ import EffectiveMobile.testTask.user.repository.UserRepository;
 import EffectiveMobile.testTask.user.request.EditRequest;
 import EffectiveMobile.testTask.user.request.EmailDeleteRequest;
 import EffectiveMobile.testTask.user.request.PhoneDeleteRequest;
+import EffectiveMobile.testTask.user.request.TransferRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -188,5 +190,24 @@ public class UserServiceImpl implements UserService {
     } else {
       throw new IllegalArgumentException("Phone are null");
     }
+  }
+
+  @Override
+  public void transferMoney(TransferRequest request) {
+      if (request.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+          throw new IllegalArgumentException("Sum must be positive");
+      }
+      User fromUser =(User) jwtService.getCurrentUser();
+      log.info("From user: {}", fromUser);
+      User toUser = userRepository.findByUsername(request.getToAccountUsername().toString())
+              .orElseThrow(() -> new EntityNotFoundException("No user with username: " + request.getToAccountUsername()));
+      log.info("To user: {}", toUser);
+      if (fromUser.getBankAccount().getBalance().compareTo(request.getAmount()) <0){
+        throw new IllegalArgumentException("Not enough money");
+      }
+      fromUser.getBankAccount().setBalance(fromUser.getBankAccount().getBalance().subtract(request.getAmount()));
+      toUser.getBankAccount().setBalance(toUser.getBankAccount().getBalance().add(request.getAmount()));
+    userRepository.save(fromUser);
+    userRepository.save(toUser);
   }
 }

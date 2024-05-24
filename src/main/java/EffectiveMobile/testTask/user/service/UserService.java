@@ -4,25 +4,27 @@ import EffectiveMobile.testTask.user.model.User;
 import EffectiveMobile.testTask.user.request.EditRequest;
 import EffectiveMobile.testTask.user.request.EmailDeleteRequest;
 import EffectiveMobile.testTask.user.request.PhoneDeleteRequest;
+import EffectiveMobile.testTask.user.request.TransferRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public interface UserService {
-  User createUser(User user);
+  public User createUser(User user);
 
-  List<User> findUsersByFilter(LocalDate birthDate, String phone, String fullName, String email);
+  public List<User> findUsersByFilter(LocalDate birthDate, String phone, String fullName, String email);
 
-  UserDetailsService userDetailService();
+  public UserDetailsService userDetailService();
 
   public User findByUsername(String username);
 
   public void editUserData(EditRequest editRequest);
 
-  void addUserContacts(EditRequest request);
+  public void addUserContacts(EditRequest request);
 
-  void deleteUserPhone(PhoneDeleteRequest request);
+  public void deleteUserPhone(PhoneDeleteRequest request);
 
-  void deleteUserEmail(EmailDeleteRequest request);
+  public void deleteUserEmail(EmailDeleteRequest request);
+  public void transferMoney(TransferRequest request);
 }

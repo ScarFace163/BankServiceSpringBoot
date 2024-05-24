@@ -8,6 +8,7 @@ import EffectiveMobile.testTask.user.model.User;
 import EffectiveMobile.testTask.user.request.EditRequest;
 import EffectiveMobile.testTask.user.request.EmailDeleteRequest;
 import EffectiveMobile.testTask.user.request.PhoneDeleteRequest;
+import EffectiveMobile.testTask.user.request.TransferRequest;
 import EffectiveMobile.testTask.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +67,15 @@ public class UserController {
     return ResponseEntity.ok(authService.authenticate(request));
   }
 
-  @GetMapping("/users/find")
+  @PostMapping("/user/transfer")
+  public ResponseEntity<TransferRequest> transfer(
+          @RequestBody TransferRequest request) {
+    log.info("Вызов функции перевода денег");
+    userService.transferMoney(request);
+    return ResponseEntity.ok(request);
+  }
+
+  @GetMapping("/user/find")
   public ResponseEntity<List<User>> findUsersByFilter(
       @RequestParam(required = false) LocalDate date,
       @RequestParam(required = false) String phone,
